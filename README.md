@@ -59,8 +59,7 @@ The operational health of the microservice ecosystem can be monitored via the Eu
 ---
 
 ### 👨‍💻 Developed By
-*   **Name:** Sandaru Perera
+*   **Name:** shasidu malshan
 *   **Batch:** GDSE 71
 *   **Institute:** IJSE - Institute of Java and Software Engineering
 *   **Subject:** Software Architectures & Design Patterns II (Final Assignment)
-*   **Project Repository:** (https://github.com/Anuththara2003/agms-microservices-Automated-Greenhouse-Management-System)
