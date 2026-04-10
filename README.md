@@ -23,7 +23,7 @@ The platform is built using the **Spring Cloud** ecosystem, following a decouple
 *   **Java:** Version 21
 *   **Build Tool:** Maven
 *   **Database:** MySQL (Ensure schemas are created for each service)
-*   **Centralized Config Repository:** ([https://github.com/Anuththara2003/agms-config-repo](https://github.com/ShashinduMalshan/agms-config-repo.git))
+*   **Centralized Config Repository:** (agms-config-repo](https://github.com/ShashinduMalshan/agms-config-repo.git))
 
 ---
 
