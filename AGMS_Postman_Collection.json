@@ -1,0 +1,645 @@
+{
+  "info": {
+    "_postman_id": "569bf0f0-4fd0-4f15-aa71-0bf17385ee8c",
+    "name": "AGMS",
+    "description": "Automated Greenhouse Management System (AGMS) API Collection. This collection contains all endpoints for the distributed microservices architecture, including Zone Management, Crop Inventory, Sensor Telemetry, and Automation & Control. All internal domain requests are routed through the secure Spring Cloud API Gateway (Port 8080) and require Bearer JWT authentication.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "44983684",
+    "_collection_link": "https://go.postman.co/collection/44983684-569bf0f0-4fd0-4f15-aa71-0bf17385ee8c?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Crop Inventory Service",
+      "item": [
+        {
+          "name": "Register New Crop Batch",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3MzEyMjI1NCwiZXhwIjoxNzczMTI0MDU0fQ.Sz10_huWSE_RUPhxvjMMT5JDUNxzPFL4LKBgo0i6l5k",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"cropName\": \"Cucumber\",\r\n    \"batchId\": \"B-002\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/crops",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "crops"
+              ]
+            },
+            "description": "Registers a new crop batch into the inventory system with an initial status."
+          },
+          "response": []
+        },
+        {
+          "name": "View All Crop Inventory",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3MzEyMjI1NCwiZXhwIjoxNzczMTI0MDU0fQ.Sz10_huWSE_RUPhxvjMMT5JDUNxzPFL4LKBgo0i6l5k",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/crops",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "crops"
+              ]
+            },
+            "description": "Retrieves the complete list of crop inventory and their current growth stages."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Crop Lifecycle Status",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/crops/69ac6cf2dd119bf81ef5ff2c/status?status=VEGETATIVE",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "crops",
+                "69ac6cf2dd119bf81ef5ff2c",
+                "status"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "VEGETATIVE"
+                }
+              ]
+            },
+            "description": "Updates the lifecycle stage of a specific crop batch (e.g., transitioning from SEEDLING to VEGETATIVE to HARVESTED)."
+          },
+          "response": []
+        }
+      ],
+      "description": "Manages the agricultural lifecycle and batch tracking of planted crops backed by a MongoDB database."
+    },
+    {
+      "name": "Zone Management Service",
+      "item": [
+        {
+          "name": "Create New Zone",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3MzEyMjI1NCwiZXhwIjoxNzczMTI0MDU0fQ.Sz10_huWSE_RUPhxvjMMT5JDUNxzPFL4LKBgo0i6l5k",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"zoneName\": \"Cucumber Greenhouse\",\r\n    \"cropType\": \"Cucumber\",\r\n    \"minTemp\": 20.0,\r\n    \"maxTemp\": 28.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/zones",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "zones"
+              ]
+            },
+            "description": "Creates a new greenhouse zone and automatically triggers a synchronous HTTP call to register a new physical device with the External IoT API."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Zone Details by ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3MzEyMjI1NCwiZXhwIjoxNzczMTI0MDU0fQ.Sz10_huWSE_RUPhxvjMMT5JDUNxzPFL4LKBgo0i6l5k",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/zones/2f75d601-e4a5-462a-b037-7ec1bfef4d4e",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "zones",
+                "2f75d601-e4a5-462a-b037-7ec1bfef4d4e"
+              ]
+            },
+            "description": "Fetches the specific details and temperature thresholds of a single greenhouse zone using its unique UUID."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Zone Thresholds",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3MzEyMjI1NCwiZXhwIjoxNzczMTI0MDU0fQ.Sz10_huWSE_RUPhxvjMMT5JDUNxzPFL4LKBgo0i6l5k",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"minTemp\": 20.0,\r\n    \"maxTemp\": 30.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/zones/4ea5424a-4b64-4248-84c3-58b490bd0525",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "zones",
+                "4ea5424a-4b64-4248-84c3-58b490bd0525"
+              ]
+            },
+            "description": "Updates the minimum and maximum temperature thresholds for a specific zone."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Zone",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3MzEyMjI1NCwiZXhwIjoxNzczMTI0MDU0fQ.Sz10_huWSE_RUPhxvjMMT5JDUNxzPFL4LKBgo0i6l5k",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/zones/4ea5424a-4b64-4248-84c3-58b490bd0525",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "zones",
+                "4ea5424a-4b64-4248-84c3-58b490bd0525"
+              ]
+            },
+            "description": "Removes a specific zone from the greenhouse management system."
+          },
+          "response": []
+        }
+      ],
+      "description": "Manages greenhouse zones, crop types, and their ideal environmental temperature thresholds backed by a MySQL database. Interacts synchronously with the External IoT API to register devices."
+    },
+    {
+      "name": "Sensor Telemetry Service",
+      "item": [
+        {
+          "name": "Get Latest Sensor Reading",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3MzEyMjI1NCwiZXhwIjoxNzczMTI0MDU0fQ.Sz10_huWSE_RUPhxvjMMT5JDUNxzPFL4LKBgo0i6l5k",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/sensors/latest",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "sensors",
+                "latest"
+              ]
+            },
+            "description": "A debugging endpoint that retrieves the most recently fetched temperature and humidity reading from the scheduled background task."
+          },
+          "response": []
+        }
+      ],
+      "description": "Acts as an automated bridge, routinely fetching external IoT data every 10 seconds and pushing it to the Automation Service."
+    },
+    {
+      "name": "Automation & Control Service",
+      "item": [
+        {
+          "name": "View Automation Action Logs",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3MzEyMjI1NCwiZXhwIjoxNzczMTI0MDU0fQ.Sz10_huWSE_RUPhxvjMMT5JDUNxzPFL4LKBgo0i6l5k",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/automation/logs",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "automation",
+                "logs"
+              ]
+            },
+            "description": "Retrieves a historical list of all triggered automated actions (e.g., TURN_FAN_ON, TURN_HEATER_ON, NORMAL) stored in MySQL."
+          },
+          "response": []
+        },
+        {
+          "name": "Manual Sensor Data Ingest (Test)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3MzEyMjI1NCwiZXhwIjoxNzczMTI0MDU0fQ.Sz10_huWSE_RUPhxvjMMT5JDUNxzPFL4LKBgo0i6l5k",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"deviceId\": \"manual-test-device-999\",\r\n  \"zoneId\": \"2f75d601-e4a5-462a-b037-7ec1bfef4d4e\",\r\n  \"temperature\": 45.5,\r\n  \"humidity\": 50.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/automation/process",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "automation",
+                "process"
+              ]
+            },
+            "description": "An internal endpoint used to manually ingest sensor data, bypassing the 10-second scheduler to test the Automation Rule Engine logic directly."
+          },
+          "response": []
+        }
+      ],
+      "description": "The central rule engine of the greenhouse. Processes incoming sensor data, evaluates thresholds via the Zone Service, and logs automated actions."
+    },
+    {
+      "name": "Authentication & Security",
+      "item": [
+        {
+          "name": "Login & Get JWT Token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/auth/login?username=admin&password=admin",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ],
+              "query": [
+                {
+                  "key": "username",
+                  "value": "admin"
+                },
+                {
+                  "key": "password",
+                  "value": "admin"
+                }
+              ]
+            },
+            "description": "Authenticates a user (admin/admin) and returns a cryptographic JWT Bearer token valid for 30 minutes. This token is required to access all other domain microservices."
+          },
+          "response": []
+        }
+      ],
+      "description": "Handles centralized JWT security and authentication routing via the Spring Cloud API Gateway."
+    },
+    {
+      "name": "External IoT API (Reference)",
+      "item": [
+        {
+          "name": "External - Register User",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"vinod\",\r\n    \"password\": \"685845\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://104.211.95.241:8080/api/auth/register",
+              "protocol": "http",
+              "host": [
+                "104",
+                "211",
+                "95",
+                "241"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            },
+            "description": "Registers a new user on the live external IoT data provider to get credentials for the Sensor Service."
+          },
+          "response": []
+        },
+        {
+          "name": "External - Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\"username\": \"vinod\",\r\n\"password\": \"685845\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://104.211.95.241:8080/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "104",
+                "211",
+                "95",
+                "241"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Logs in to the external API to receive the Access Token and Refresh Token required for telemetry fetching."
+          },
+          "response": []
+        },
+        {
+          "name": "External - Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJJZCI6IjI0ZjYxYWQxLTc0M2MtNGU4Yi05NTUxLWVjOWM4YTRhMTQxMCIsInN1YiI6InZpbm9kIiwiaWF0IjoxNzczMTI0MTMxLCJleHAiOjE3NzM3Mjg5MzF9.xBTsf94tznriyomLg9xMAs5hZhZila1u1eo1Arqku4E\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://104.211.95.241:8080/api/auth/refresh",
+              "protocol": "http",
+              "host": [
+                "104",
+                "211",
+                "95",
+                "241"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "auth",
+                "refresh"
+              ]
+            },
+            "description": "Refreshes an expired external access token without requiring a full re-login."
+          },
+          "response": []
+        },
+        {
+          "name": "External - Add New Device",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJJZCI6IjI0ZjYxYWQxLTc0M2MtNGU4Yi05NTUxLWVjOWM4YTRhMTQxMCIsInN1YiI6InZpbm9kIiwiaWF0IjoxNzczMTI0MjIxLCJleHAiOjE3NzMxMjUxMjF9.CzBKRBgqdPQ2LJ1zJLSrSbpxw4uMtQ2TQjUgnUOb-OU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\"name\": \"Lab-Temp-Sensor\",\r\n\"zoneId\": \"2f75d601-e4a5-462a-b037-7ec1bfef4d4e\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://104.211.95.241:8080/api/devices",
+              "protocol": "http",
+              "host": [
+                "104",
+                "211",
+                "95",
+                "241"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "devices"
+              ]
+            },
+            "description": "Manually registers a new IoT device on the external server. (Note: The local Zone Management Service does this automatically in the background)."
+          },
+          "response": []
+        },
+        {
+          "name": "External - Get All Devices",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJJZCI6IjI0ZjYxYWQxLTc0M2MtNGU4Yi05NTUxLWVjOWM4YTRhMTQxMCIsInN1YiI6InZpbm9kIiwiaWF0IjoxNzczMTI0MjIxLCJleHAiOjE3NzMxMjUxMjF9.CzBKRBgqdPQ2LJ1zJLSrSbpxw4uMtQ2TQjUgnUOb-OU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://104.211.95.241:8080/api/devices",
+              "protocol": "http",
+              "host": [
+                "104",
+                "211",
+                "95",
+                "241"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "devices"
+              ]
+            },
+            "description": "Retrieves a list of all devices currently registered under the authenticated account on the external server."
+          },
+          "response": []
+        },
+        {
+          "name": "External - Get Device Telemetry",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJJZCI6IjI0ZjYxYWQxLTc0M2MtNGU4Yi05NTUxLWVjOWM4YTRhMTQxMCIsInN1YiI6InZpbm9kIiwiaWF0IjoxNzczMTI0MjIxLCJleHAiOjE3NzMxMjUxMjF9.CzBKRBgqdPQ2LJ1zJLSrSbpxw4uMtQ2TQjUgnUOb-OU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://104.211.95.241:8080/api/devices/telemetry/081239fe-c3b4-4acf-bbb5-13bc64310a64",
+              "protocol": "http",
+              "host": [
+                "104",
+                "211",
+                "95",
+                "241"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "devices",
+                "telemetry",
+                "081239fe-c3b4-4acf-bbb5-13bc64310a64"
+              ]
+            },
+            "description": "Fetches the live temperature and humidity for a specific external device. (Note: The local Sensor Telemetry Service fetches this automatically every 10 seconds)."
+          },
+          "response": []
+        }
+      ],
+      "description": "Reference endpoints for the provided external IoT mock server (Reactive WebFlux). These are documented here to show the external contracts the microservices interact with."
+    }
+  ]
+}
